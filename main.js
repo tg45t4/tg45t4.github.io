@@ -7,7 +7,7 @@ const score = document.querySelector('.score'),
 
 car.classList.add('car');
 
-start.addEventListener('click', startGame('s'));
+start.addEventListener('click', startGame);
 start1.addEventListener('click', startGame);
 start2.addEventListener('click', startGame);
 
@@ -33,7 +33,7 @@ function getQuantityElements(heightElement){
 }
 
 function startGame(q){
-    console.log('q: ', q);
+
     
 
     start.classList.add('hide');
