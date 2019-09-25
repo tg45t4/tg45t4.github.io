@@ -135,7 +135,11 @@ function moveEnemy(){
             carRect.bottom >= enemyRect.top){           
         setting.start = false;        
         start.classList.remove('hide')
+        start1.classList.remove('hide')
+        start2.classList.remove('hide')
         start.style.top = score.offsetHeight;
+        start1.style.top = score.offsetHeight;
+        start2.style.top = score.offsetHeight;
         stopMusic();
         playMusic('crash');
         }
