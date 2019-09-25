@@ -7,7 +7,7 @@ const score = document.querySelector('.score'),
 
 car.classList.add('car');
 
-start.addEventListener('click', startGame);
+start.addEventListener('click', startGame('s'));
 start1.addEventListener('click', startGame);
 start2.addEventListener('click', startGame);
 
@@ -21,20 +21,20 @@ const keys = {
     ArrowLeft:false
 };
 
-let setting = {
+const setting = {
     start:false,
     score:0,
     speed:3,
     traffic:3
 
 };
-function getQuantityElements(heightElement){
-    
+function getQuantityElements(heightElement){ 
    return document.documentElement.clientHeight / heightElement + 1;
 }
 
-function startGame(tr){
-   
+function startGame(q){
+    console.log('q: ', q);
+    
 
     start.classList.add('hide');
     start1.classList.add('hide');
@@ -154,8 +154,7 @@ function moveEnemy(){
 
  let audio = new Audio()
 function playMusic(msc){
-     console.log(msc);
-    
+         
     if(msc=='start'){      
         audio.src = 'mp3.mp3';  
         audio.play();       
