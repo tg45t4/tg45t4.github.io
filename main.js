@@ -7,9 +7,9 @@ const score = document.querySelector('.score'),
 
 car.classList.add('car');
 
-start.addEventListener('click', () => { startGame("3"); });
-start1.addEventListener('click', () => { startGame("2"); });
-start2.addEventListener('click', () => { startGame("1"); });
+start.addEventListener('click', () => { startGame(3,3); });
+start1.addEventListener('click', () => { startGame(2,4); });
+start2.addEventListener('click', () => { startGame(2,5); });
 
 document.addEventListener('keydown', startRun);
 document.addEventListener('keyup', stopRun);
@@ -24,7 +24,7 @@ const keys = {
 const setting = {
     start:false,
     score:0,
-    speed:3,
+    speed:1,
     traffic:3
 
 };
@@ -32,8 +32,9 @@ function getQuantityElements(heightElement){
    return document.documentElement.clientHeight / heightElement + 1;
 }
 
-function startGame(q){
-    setting.traffic = q;
+function startGame(tr,sp){
+    setting.traffic = tr;
+    setting.speed = sp;
 
     
 
