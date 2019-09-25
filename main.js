@@ -7,9 +7,9 @@ const score = document.querySelector('.score'),
 
 car.classList.add('car');
 
-start.addEventListener('click', startGame);
-start1.addEventListener('click', startGame);
-start2.addEventListener('click', startGame);
+start.addEventListener('click', () => { startGame("3"); });
+start1.addEventListener('click', () => { startGame("2"); });
+start2.addEventListener('click', () => { startGame("1"); });
 
 document.addEventListener('keydown', startRun);
 document.addEventListener('keyup', stopRun);
@@ -33,6 +33,7 @@ function getQuantityElements(heightElement){
 }
 
 function startGame(q){
+    setting.traffic = q;
 
     
 
@@ -134,9 +135,9 @@ function moveEnemy(){
             carRect.left <= enemyRect.right &&
             carRect.bottom >= enemyRect.top){           
         setting.start = false;        
-        start.classList.remove('hide')
-        start1.classList.remove('hide')
-        start2.classList.remove('hide')
+        start.classList.remove('hide');
+        start1.classList.remove('hide');
+        start2.classList.remove('hide');
         start.style.top = score.offsetHeight;
         start1.style.top = score.offsetHeight;
         start2.style.top = score.offsetHeight;
