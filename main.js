@@ -1,11 +1,16 @@
 const score = document.querySelector('.score'),
     start = document.querySelector('.start'),
-    gameArea = document.querySelector('.gameArea')
+    start1 = document.querySelector('.start1'),
+    start2 = document.querySelector('.start2'),
+    gameArea = document.querySelector('.gameArea'),
     car = document.createElement('div');
 
-car.classList.add('car')
+car.classList.add('car');
 
-    start.addEventListener('click', startGame);
+start.addEventListener('click', startGame);
+start1.addEventListener('click', startGame);
+start2.addEventListener('click', startGame);
+
 document.addEventListener('keydown', startRun);
 document.addEventListener('keyup', stopRun);
 
@@ -16,7 +21,7 @@ const keys = {
     ArrowLeft:false
 };
 
-const setting = {
+let setting = {
     start:false,
     score:0,
     speed:3,
@@ -28,9 +33,17 @@ function getQuantityElements(heightElement){
    return document.documentElement.clientHeight / heightElement + 1;
 }
 
-function startGame(){
-    start.classList.add('hide');
+function startGame(tr){
+   
 
+    start.classList.add('hide');
+    start1.classList.add('hide');
+    start2.classList.add('hide');
+    playMusic('start');
+    gameArea.innerHTML = '';
+    car.style.left = '125px';
+    car.style.top = 'auto';
+    car.style.right= '10px';
     for(let i = 0; i < getQuantityElements(100); i++){
         const line = document.createElement('div');
         line.classList.add('line');
@@ -44,11 +57,11 @@ function startGame(){
         enemy.y =  -100*setting.traffic * (i+1);
         enemy.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50))+ 'px';
         enemy.style.top = enemy.y +'px';
-        enemy.style.background = 'transparent url("./image/enemy3.png") center / cover no-repeat';
+        enemy.style.background = 'transparent url("./image/enemy'+Math.floor(Math.random() * 3)+'.png") center / cover no-repeat';
         gameArea.appendChild(enemy);
     }
 
-
+    setting.score = 0;
     setting.start = true;
     gameArea.appendChild(car);
     setting.x = car.offsetLeft;
@@ -59,9 +72,12 @@ function startGame(){
 function playGame(){
     
     if(setting.start){
+        setting.score += setting.speed;
+        score.textContent = 'Score: '+ setting.score;
         moveRoad();
         moveEnemy();
-        if(keys.ArrowLeft && setting.x>0){
+    
+        if(keys.ArrowLeft && setting.x>0){         
             setting.x-=setting.speed;
         }
         if(keys.ArrowRight && setting.x<(gameArea.offsetWidth - car.offsetWidth)){
@@ -84,12 +100,15 @@ function playGame(){
 
 function startRun(event){
     event.preventDefault();
-    keys[event.key] = true;
+    
+    if(event.key == 'ArrowLeft' || event.key =='ArrowRight' || event.key =='ArrowUp' || event.key =='ArrowDown'){
+        console.log(event.key);
+    keys[event.key] = true;  
+    }
 }
 
 function stopRun(){
     event.preventDefault();
-    console.log(event.key);
     keys[event.key] = false;
 }
 
@@ -107,6 +126,20 @@ function moveRoad(){
 function moveEnemy(){
     let enemy = document.querySelectorAll('.enemy');
     enemy.forEach(function(item){
+        let carRect = car.getBoundingClientRect();
+        let enemyRect = item.getBoundingClientRect();
+
+        if (carRect.top <= enemyRect.bottom && 
+            carRect.right >= enemyRect.left &&
+            carRect.left <= enemyRect.right &&
+            carRect.bottom >= enemyRect.top){           
+        setting.start = false;        
+        start.classList.remove('hide')
+        start.style.top = score.offsetHeight;
+        stopMusic();
+        playMusic('crash');
+        }
+
         item.y += setting.speed / 2;
         item.style.top = item.y + 'px';
         if(item.y>=document.documentElement.clientHeight){
@@ -116,4 +149,26 @@ function moveEnemy(){
     });
 
    
+}
+
+
+ let audio = new Audio()
+function playMusic(msc){
+     console.log(msc);
+    
+    if(msc=='start'){      
+        audio.src = 'mp3.mp3';  
+        audio.play();       
+
+    }
+    
+    else if(msc=='crash'){   
+        audio.src = 'crash.mp3';
+        audio.play();
+       
+    }
+
+}
+function stopMusic(){
+    audio.pause(); 
 }
