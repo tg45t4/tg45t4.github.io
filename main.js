@@ -9,7 +9,7 @@ car.classList.add('car');
 
 start.addEventListener('click', () => { startGame(3,3); });
 start1.addEventListener('click', () => { startGame(2,4); });
-start2.addEventListener('click', () => { startGame(2,5); });
+start2.addEventListener('click', () => { startGame(2,7); });
 
 document.addEventListener('keydown', startRun);
 document.addEventListener('keyup', stopRun);
